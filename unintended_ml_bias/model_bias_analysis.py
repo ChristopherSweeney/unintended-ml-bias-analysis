@@ -621,6 +621,9 @@ def per_subgroup_scatterplots(df,
 
 def save_inline_png(fig, out, **kwargs):
   """Saves figure as an inline data URI resource."""
+  if type(out) is str:
+    fig.savefig(out, format='png', **kwargs)
+    return
   s = io.BytesIO()
   fig.savefig(s, format='png', **kwargs)
   out.write('<img src="data:image/png;base64,{}"/>'.format(
@@ -667,7 +670,7 @@ def plot_metric_heatmap(bias_metrics_results,
     # well. We should consider using HTML tables instead, using
     # DataFrame.style.applymap for styling the table background color.
     save_inline_png(fig, out, bbox_inches='tight')
-    plt.close()
+    #plt.close()
   return ax
 
 
